@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='css/style.css') }}"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light" style="background-color: darkolivegreen">
+        <div class="container-fluid">
+            <a class="navbar-brand ps-3" href="#">Recipes</a>
+            <span class="navbar-text h4 text-light pe-3">{{ session['fname'] }} {{ session['lname'] }}</span>
+        </div>
+    </nav>
+
+    <div class="row w-75 justify-content-end mx-auto">
+        <a class="nav-link" href="/welcome" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">Home</button></a>
+        <a class="nav-link" href="/new_recipe" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">New Recipe</button></a>
+        <a class="nav-link" href="/logout" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">Logout</button></a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row w-50 mx-auto mt-4">
+            <table class="table">
+                <thead>
+                    <th colspan="2"><h3>{{ recipes.name }}</h3></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Description:</th>
+                        <td>{{ recipes.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Instructions:</th>
+                        <td>{{ recipes.instructions }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date Made:</th>
+                        <td>{{ recipes.date_made.strftime('%B %-d, %Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Under 30?</th>
+                        {% if recipes.under30 == 1: %}
+                        <td>This recipe can be made in less than 30 minutes!</td>
+                        {% else: %}
+                        <td>This recipe will take you more than 30 minutes to make.</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

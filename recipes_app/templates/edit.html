@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recipes - Edit Recipe</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='css/style.css') }}"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light" style="background-color: darkolivegreen">
+        <div class="container-fluid">
+            <a class="navbar-brand ps-3" href="#">Recipes</a>
+            <span class="navbar-text h4 text-light pe-3">{{ session['fname'] }} {{ session['lname'] }}</span>
+        </div>
+    </nav>
+
+    <div class="row w-75 justify-content-end mx-auto">
+        <a class="nav-link" href="/welcome" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">Home</button></a>
+        <a class="nav-link" href="/new_recipe" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">New Recipe</button></a>
+        <a class="nav-link" href="/logout" style="width: auto;"><button class="btn btn-sm" style="background-color: coral">Logout</button></a>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row w-50 mx-auto mt-3">
+            <h3>Make changes to your recipe here:</h3>
+            <form action="/update_recipe/{{ recipe.id }}" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" name="name" id="name" class="form-control" value="{{ recipe.name }}">
+                </div>
+                {% for message in get_flashed_messages(category_filter=['error_name']) %}
+                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea name="description" id="description" class="form-control">{{ recipe.description }}</textarea>
+                </div>
+                {% for message in get_flashed_messages(category_filter=['error_description']) %}
+                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <label for="instructions class="form-label">Instructions:</label>
+                    <textarea name="instructions" id="instructions" class="form-control">{{ recipe.instructions }}</textarea>
+                </div>
+                {% for message in get_flashed_messages(category_filter=['error_instructions']) %}
+                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <label for="dmade" class="form-label">When did you make this?</label>
+                    <input type="date" name="dmade" id="dmade" class="form-control" value="{{ recipe.date_made }}">
+                </div>
+                {% for message in get_flashed_messages(category_filter=['error_dmade']) %}
+                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    {% if recipe['under30'] == 1: %}
+                        <input type="radio" name="under30" id="under30" class="" value="1" checked>
+                        <label for="under30" class="form-label">Yes</label>
+                        <input type="radio" name="under30" id="under30" class="" value="0">
+                        <label for="under30" class="form-label">No</label>
+                    {% else: %}
+                        <input type="radio" name="under30" id="under30" class="" value="1">
+                        <label for="under30" class="form-label">Yes</label>
+                        <input type="radio" name="under30" id="under30" class="" value="0" checked>
+                        <label for="under30" class="form-label">No</label>
+                    {% endif %}
+                </div>
+                {% for message in get_flashed_messages(category_filter=['error_under30']) %}
+                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade show" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                <div class="mb-3">
+                    <input type="hidden" name="submitted_by" value="{{ session['user_id'] }}" class="form-control">
+                    <input type="submit" value="Submit" class="form-control btn btn-primary btn-sm">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
